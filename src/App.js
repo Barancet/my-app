@@ -1,6 +1,7 @@
 //import logo from './logo.svg';
 import "./App.css";
 import { useState } from "react";
+//import { click } from "@testing-library/user-event/dist/click";
 
 // const Header = (props) => {
 //   return <h1>{props.course}</h1>;
@@ -101,17 +102,91 @@ import { useState } from "react";
 //     </div>
 //   );
 // };
-const App = () => {
-  const [counter, setCounter] = useState(0);
 
-  console.log("rendering...", counter);
-  return (
+/* Lesson 1C  with the counter buttons and destructured arrays */
+// const Display = ({ counter }) => <div>{counter}</div> 
+// const Button = ( {onClick , text}) => <button onClick={onClick}>{text}</button>
+
+
+// const App = () => {
+//   const [counter, setCounter] = useState(0);
+//   const increaseByOne = () => setCounter(counter+1)
+//   const decreaseByOne = () => setCounter(counter-1)
+//   const resetToZero = () => setCounter(0);
+
+
+//   console.log("rendering...", counter);
+//   return (
+//     <div>
+//       <Display counter={counter} />
+//       <Button 
+//         onClick={increaseByOne}
+//         text="Increment" />
+//       <Button 
+//       onClick={resetToZero} 
+//       text="Reset 0"/>
+//       <Button 
+//       onClick={decreaseByOne}
+//       text="deincrement" />
+//     </div>
+//   );
+// };
+
+
+const History = (props) =>{
+  if(props.allClicks.length === 0){
+    return (
+      <div>
+        This App is used by pressing a button
+      </div>
+    )
+  }
+  return(
     <div>
-      <div>{counter}</div>
-      <button onClick={() => setCounter(counter + 1)}>plus</button>
-      <button onClick={() => setCounter(0)}>Reset</button>
+      Button Press History: {props.allClicks.join(' ')}
     </div>
-  );
-};
+  )
+}
+
+const Button = ({ handleClick, text }) => {
+  <button onClick={handleClick}>
+    {text}
+  </button>
+}
+
+const App = () => {
+  //maintain clicks
+  // const [clicks, setClicks] = useState({
+  //   left: 0, right: 0
+  // })
+
+  const [left, setLeft] = useState(0)
+  const [right, setRight] = useState(0)
+  const [allClicks, setAll] = useState([])
+
+  // const handleLeftClick = () => 
+  //   setClicks({ ...clicks, left: clicks.left+1})
+  // const handleRightClick = () =>
+  //   setClicks( { ...clicks, right: clicks.right+1})
+
+  const handleLeftClick = () => {
+    setAll(allClicks.concat('L'))
+    setLeft(left+1)
+  }
+  const handleRightClick = () => {
+    setAll(allClicks.concat("R"))
+    setRight(right+1)
+  }
+
+  return(
+    <div>
+      {left}
+      <Button onClick={handleLeftClick} text="left"/>
+      <Button onClick={handleRightClick} text="Right"/>
+      {right}
+      <History allClicks={allClicks} />
+    </div>
+  )
+}
 
 export default App;
